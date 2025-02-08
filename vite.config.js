@@ -10,7 +10,7 @@ export default defineConfig({
           [
             "@babel/preset-react",
             {
-              //jsx에서 수동으로 import 안해도 됨
+              //jsx에서 수동으로 createElement import 안해도 됨
               runtime: "automatic",
               //createElement 함수를 가져올 경로
               importSource: "/src/create-element",
