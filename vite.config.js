@@ -5,14 +5,11 @@ export default defineConfig({
   plugins: [
     react({
       babel: {
-        plugins: [],
-        presets: [
+        plugins: [
           [
-            "@babel/preset-react",
+            "@babel/plugin-transform-react-jsx",
             {
-              //jsx에서 수동으로 createElement import 안해도 됨
               runtime: "automatic",
-              //createElement 함수를 가져올 경로
               importSource: "/src/create-element",
             },
           ],
