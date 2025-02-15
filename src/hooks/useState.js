@@ -12,20 +12,23 @@ let currentStateIndex = 0;
 let states = [];
 
 export function useState(initialValue) {
+  // useState가 컴포넌트에서 선언될 때의 인덱스를 저장하여, 이후에도 올바른 state를 참조할 수 있도록 함
+  const index = currentStateIndex;
+
   // 초기 값 설정
-  if (!states[currentStateIndex]) {
-    states[currentStateIndex] = initialValue;
+  if (!states[index]) {
+    states[index] = initialValue;
   }
 
   const setState = (newValue) => {
-    states[currentStateIndex] = newValue;
+    states[index] = newValue;
 
     rerenderApp();
   };
 
   currentStateIndex++;
 
-  return [states[currentStateIndex], setState];
+  return [states[index], setState];
 }
 
 /**

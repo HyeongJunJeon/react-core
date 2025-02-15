@@ -1,4 +1,4 @@
-import { renderVirtualDom } from "./utill";
+import { renderVirtualDom } from "./helper";
 
 /**
  * Virtual DOM을 실제 DOM에 렌더링
