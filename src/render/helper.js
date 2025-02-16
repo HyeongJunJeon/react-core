@@ -35,13 +35,18 @@ function handleProps(element, props) {
       };
 
       const eventName = eventMap[key] ?? key.toLowerCase().substring(2);
-      element.addEventListener(eventName, value);
-    } else if (key !== "children" && key !== "key") {
-      if (typeof value === "boolean") {
+      return element.addEventListener(eventName, value);
+    }
+
+    if (key !== "children" && key !== "key") {
+      switch (typeof value) {
         // checkbox가 계속 true 값을 가지게 되서 속성 자체를 제거
-        value ? element.setAttribute(key, "") : element.removeAttribute(key);
-      } else if (typeof value !== "object") {
-        element.setAttribute(key, String(value));
+        case "boolean":
+          value ? element.setAttribute(key, "") : element.removeAttribute(key);
+          break;
+
+        default:
+          element.setAttribute(key, String(value));
       }
     }
   });

@@ -23,7 +23,7 @@ export function useState(initialValue) {
   const setState = (newValue) => {
     states[index] = newValue;
 
-    rerenderApp();
+    rerender();
   };
 
   currentStateIndex++;
@@ -35,7 +35,7 @@ export function useState(initialValue) {
  * currentStateIndex는 매렌더링마다 0으로 초기화하여, 컴포넌트에서 사용되는 state들의 순서를 매 랜더링마다 저장.
  * states는 기존 값들을 보존해야 하므로 초기화하지 않음.
  */
-function rerenderApp() {
+function rerender() {
   currentStateIndex = 0;
 
   const rootElement = document.getElementById("root");

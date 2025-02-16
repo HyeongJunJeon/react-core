@@ -18,10 +18,10 @@ function App() {
   const addTodo = () => {
     if (input.trim() === "") return;
 
-    const newTodos = [...todos, { text: input, completed: false }];
-    setInput("");
+    const newTodos = [{ text: input, completed: false }, ...todos];
     setTodos(newTodos);
     saveTodosToStorage(newTodos);
+    setInput("");
   };
 
   const toggleTodo = (index) => {
@@ -54,17 +54,21 @@ function App() {
       <button onClick={addTodo}>추가</button>
 
       <ul>
-        {todos.map((todo, index) => (
-          <li key={index}>
-            <input
-              type="checkbox"
-              checked={todo.completed}
-              onChange={() => toggleTodo(index)}
-            />
-            {todo.text}
-            <button onClick={() => deleteTodo(index)}>삭제</button>
-          </li>
-        ))}
+        {todos.length > 0 ? (
+          todos.map((todo, index) => (
+            <li key={index}>
+              <input
+                type="checkbox"
+                checked={todo.completed}
+                onClick={() => toggleTodo(index)}
+              />
+              {todo.text}
+              <button onClick={() => deleteTodo(index)}>삭제</button>
+            </li>
+          ))
+        ) : (
+          <li>할 일이 없습니다.</li>
+        )}
       </ul>
     </div>
   );
