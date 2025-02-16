@@ -4,42 +4,45 @@ import { TODOS } from "./util/const";
 
 const loadTodosFromStorage = () => {
   const savedTodos = getItem(TODOS);
-  return savedTodos ? JSON.parse(savedTodos) : [];
+  return savedTodos ? savedTodos : [];
 };
 
 const saveTodosToStorage = (todos) => {
-  setItem(TODOS, JSON.stringify(todos));
+  setItem(TODOS, todos);
 };
 
 function App() {
   const [todos, setTodos] = useState(loadTodosFromStorage());
-  const [input, setInput] = useState("");
+  const [todoInput, setTodoInput] = useState("");
 
   const addTodo = () => {
-    if (input.trim() === "") return;
+    if (todoInput.trim() === "") return;
 
-    const newTodos = [{ text: input, completed: false }, ...todos];
+    const newTodos = [
+      { id: Date.now(), text: todoInput, completed: false },
+      ...todos,
+    ];
     setTodos(newTodos);
     saveTodosToStorage(newTodos);
-    setInput("");
+    setTodoInput("");
   };
 
-  const toggleTodo = (index) => {
-    const newTodos = todos.map((todo, i) =>
-      i === index ? { ...todo, completed: !todo.completed } : todo
+  const toggleTodo = (id) => {
+    const newTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
     );
     setTodos(newTodos);
     saveTodosToStorage(newTodos);
   };
 
-  const deleteTodo = (index) => {
-    const newTodos = todos.filter((_, i) => i !== index);
+  const deleteTodo = (id) => {
+    const newTodos = todos.filter((todo) => todo.id !== id);
     setTodos(newTodos);
     saveTodosToStorage(newTodos);
   };
 
   const onChangeInput = (e) => {
-    setInput(e.target.value);
+    setTodoInput(e.target.value);
   };
 
   return (
@@ -47,7 +50,7 @@ function App() {
       <h1>TODO 리스트</h1>
       <input
         type="text"
-        value={input}
+        value={todoInput}
         onChange={onChangeInput}
         placeholder="할 일을 입력하세요."
       />
@@ -55,15 +58,15 @@ function App() {
 
       <ul>
         {todos.length > 0 ? (
-          todos.map((todo, index) => (
-            <li key={index}>
+          todos.map(({ id, text, completed }) => (
+            <li key={id}>
               <input
                 type="checkbox"
-                checked={todo.completed}
-                onClick={() => toggleTodo(index)}
+                checked={completed}
+                onClick={() => toggleTodo(id)}
               />
-              {todo.text}
-              <button onClick={() => deleteTodo(index)}>삭제</button>
+              {text}
+              <button onClick={() => deleteTodo(id)}>삭제</button>
             </li>
           ))
         ) : (

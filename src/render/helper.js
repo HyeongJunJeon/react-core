@@ -42,7 +42,9 @@ function handleProps(element, props) {
       switch (typeof value) {
         // checkbox가 계속 true 값을 가지게 되서 속성 자체를 제거
         case "boolean":
-          value ? element.setAttribute(key, "") : element.removeAttribute(key);
+          value
+            ? element.setAttribute(key, "true")
+            : element.removeAttribute(key);
           break;
 
         default:
