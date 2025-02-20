@@ -42,6 +42,7 @@ function App() {
   };
 
   const onChangeInput = (e) => {
+    console.log("SyntheticEvent", e);
     setTodoInput(e.target.value);
   };
 

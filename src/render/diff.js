@@ -27,6 +27,7 @@ export function diff(parent, oldNode, newNode, index = 0) {
   if (typeof newNode !== "string" && typeof newNode !== "number") {
     updateProps(oldDom, oldNode.props, newNode.props);
 
+    // 두 children의 길이를 비교해 더 긴 쪽을 기준으로 재귀적으로 비교
     const oldChildren = oldNode.props?.children || [];
     const newChildren = newNode.props?.children || [];
     const maxLength = Math.max(oldChildren.length, newChildren.length);
