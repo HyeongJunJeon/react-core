@@ -95,7 +95,6 @@ export function handleEventListeners({ element, key, value, type = "add" }) {
     element._listeners = element._listeners || {};
     element._listeners[key] = syntheticCallback;
   } else {
-    // remove
     const callback = element._listeners?.[key];
     if (callback) {
       element.removeEventListener(eventName, callback);
