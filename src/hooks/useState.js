@@ -22,12 +22,10 @@ export function useState(initialValue) {
 
   const setState = (newValue) => {
     states[index] = newValue;
-
     rerender();
   };
 
   currentStateIndex++;
-
   return [states[index], setState];
 }
 
@@ -39,8 +37,6 @@ function rerender() {
   currentStateIndex = 0;
 
   const rootElement = document.getElementById("root");
-
-  rootElement.innerHTML = "";
   const app = App();
   render(app, rootElement);
 }

@@ -55,10 +55,11 @@ function App() {
         placeholder="할 일을 입력하세요."
       />
       <button onClick={addTodo}>추가</button>
-
-      <ul>
-        {todos.length > 0 ? (
-          todos.map(({ id, text, completed }) => (
+      {todos.length === 0 ? (
+        <p>할 일이 없습니다.</p>
+      ) : (
+        <ul>
+          {todos.map(({ id, text, completed }) => (
             <li key={id}>
               <input
                 type="checkbox"
@@ -68,11 +69,9 @@ function App() {
               {text}
               <button onClick={() => deleteTodo(id)}>삭제</button>
             </li>
-          ))
-        ) : (
-          <li>할 일이 없습니다.</li>
-        )}
-      </ul>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

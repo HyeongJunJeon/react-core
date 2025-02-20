@@ -1,11 +1,15 @@
+import { diff } from "./diff";
 import { renderVirtualDom } from "./helper";
 
-/**
- * Virtual DOM을 실제 DOM에 렌더링
- */
-export function render(vdom, container) {
-  const element = renderVirtualDom(vdom);
-  if (element) {
-    container.appendChild(element);
+let oldVDOM = null;
+
+export function render(newVDOM, container) {
+  if (!oldVDOM) {
+    const dom = renderVirtualDom(newVDOM);
+    container.appendChild(dom);
+  } else {
+    diff(container, oldVDOM, newVDOM, 0);
   }
+
+  oldVDOM = newVDOM;
 }
