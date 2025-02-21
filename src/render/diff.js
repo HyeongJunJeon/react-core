@@ -59,6 +59,7 @@ function isChangedNode(oldNode, newNode) {
  */
 function updateProps(dom, oldProps = {}, newProps = {}) {
   // 기존 이벤트 리스너 속성 제거
+
   for (const key in oldProps) {
     if (!(key in newProps)) {
       dom.removeAttribute(key);

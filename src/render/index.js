@@ -1,3 +1,4 @@
+import { runEffects } from "../hooks/useEffect";
 import { diff } from "./diff";
 import { renderVirtualDom } from "./helper";
 
@@ -12,4 +13,7 @@ export function render(newVDOM, container) {
   }
 
   oldVDOM = newVDOM;
+
+  // useEffect가 컴포넌트에서 실행(effect객체에 useEffect관련 정보가 저장)되고 모든 DOM이 렌더링 되고 나서야 runEffects를 실행한다.
+  runEffects();
 }

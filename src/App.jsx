@@ -1,6 +1,7 @@
 import { useState } from "./hooks/useState";
 import { getItem, setItem } from "./util/storage";
 import { TODOS } from "./util/const";
+import { useEffect } from "./hooks/useEffect";
 
 const loadTodosFromStorage = () => {
   const savedTodos = getItem(TODOS);
@@ -42,7 +43,6 @@ function App() {
   };
 
   const onChangeInput = (e) => {
-    console.log("SyntheticEvent", e);
     setTodoInput(e.target.value);
   };
 
