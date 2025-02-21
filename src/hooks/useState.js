@@ -1,6 +1,6 @@
 import App from "../App";
 import { render } from "../render";
-import { resetEffectIndex, runEffects } from "./useEffect";
+import { resetEffectIndex } from "./useEffect";
 
 /**
  * useState를 여러개 사용할 수 있으므로 올바른 위치에 저장하고 식별하여 사용하기 위해 사용
@@ -35,16 +35,11 @@ export function useState(initialValue) {
  * states는 기존 값들을 보존해야 하므로 초기화하지 않음.
  */
 function rerender() {
-  // 1) useState 인덱스 초기화
   currentStateIndex = 0;
-  // 2) useEffect 인덱스도 초기화
+  // useEffect 인덱스도 초기화
   resetEffectIndex();
 
-  // 3) 새로운 VDOM 만들고 diff
   const rootElement = document.getElementById("root");
-  const newVDOM = App(); // 최상위 컴포넌트 호출
+  const newVDOM = App();
   render(newVDOM, rootElement);
-
-  // 4) diff가 끝나면 effect 실행
-  runEffects();
 }

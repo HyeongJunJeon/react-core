@@ -13,6 +13,12 @@ export function renderVirtualDom(vnode) {
     return document.createTextNode(String(vnode));
   }
 
+  // 함수 컴포넌트인 경우
+  if (typeof vnode.type === "function") {
+    const componentVNode = vnode.type(vnode.props || {});
+    return renderVirtualDom(componentVNode);
+  }
+
   const element = document.createElement(vnode.type);
   handleProps(element, vnode.props);
   handleChildren(element, vnode.props?.children);

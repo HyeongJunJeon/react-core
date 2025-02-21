@@ -36,6 +36,7 @@ export function useEffect(callback, deps) {
   currentEffect.deps = deps;
 
   // 의존성이 바뀌었으면 렌더 후에 실행할 effect를 저장, 아니면 null
+
   currentEffect.effect = hasChanged ? callback : null;
 
   currentEffectIndex++;
@@ -53,7 +54,9 @@ export function runEffects() {
         cleanup();
       }
 
+      //effect가 return(cleanup)하는 함수가 있다면 newCleanup에 해당 로직만 저장된다.
       const newCleanup = effect();
+
       if (typeof newCleanup === "function") {
         effects[i].cleanup = newCleanup;
       } else {
@@ -68,4 +71,19 @@ export function runEffects() {
  */
 export function resetEffectIndex() {
   currentEffectIndex = 0;
+}
+
+/**
+ * 현재 컼포넌트가 App.js 하나라서 root를 강제로 비워서 cleanup을 테스트하기 위한 함수
+ */
+export function unmountApp() {
+  for (const effect of effects) {
+    if (typeof effect.cleanup === "function") {
+      effect.cleanup();
+    }
+  }
+
+  // 3) root 요소를 비우거나 제거
+  const root = document.getElementById("root");
+  if (root) root.innerHTML = "";
 }
