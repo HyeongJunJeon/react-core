@@ -40,7 +40,7 @@ export function diff(parent, oldNode, newNode, index = 0) {
 }
 
 /**
- * 타입, 문자열이 다르면 변경되었다고 판단
+ * 타입(태그), 문자, 숫자가 다르면 변경되었다고 판단
  */
 function isChangedNode(oldNode, newNode) {
   if (oldNode == null || newNode == null) return oldNode !== newNode;
@@ -59,41 +59,51 @@ function isChangedNode(oldNode, newNode) {
  * oldProps와 newProps를 비교해 변경된 부분만 업데이트
  */
 function updateProps(dom, oldProps = {}, newProps = {}) {
-  // 기존 이벤트 리스너 속성 제 거
-  for (const key in oldProps) {
-    if (!(key in newProps)) {
-      dom.removeAttribute(key);
-    }
+  const allKeys = new Set([...Object.keys(oldProps), ...Object.keys(newProps)]);
 
-    // TODO: 함수는 diff가 실행될 때마다 삭제 및 생성 되므로 비교하는 로직이 필요함...
+  for (const key of allKeys) {
+    const oldVal = oldProps[key];
+    const newVal = newProps[key];
 
-    if (key.startsWith("on") && typeof oldProps[key] === "function") {
-      handleEventListeners({
-        element: dom,
-        key,
-        value: oldProps[key],
-        type: "remove",
-      });
-    }
-  }
-
-  // 새롭게 들어온 props를 설정
-  for (const [key, value] of Object.entries(newProps)) {
-    if (key.startsWith("on") && typeof value === "function") {
-      handleEventListeners({ element: dom, key, value, type: "add" });
-    } //
-    else if (typeof value === "boolean") {
-      if (value) {
-        dom.setAttribute(key, "true");
-      } else {
-        dom.removeAttribute(key);
+    if (key.startsWith("on")) {
+      if (typeof oldVal === "function" && oldVal !== newVal) {
+        handleEventListeners({
+          element: dom,
+          key,
+          value: oldVal,
+          type: "remove",
+        });
       }
-    } // input의 경우 DOM 프로퍼티에 직접 할당
-    else if (key === "value") {
-      dom.value = value;
-    } //
-    else {
-      dom.setAttribute(key, String(value));
+
+      if (typeof newVal === "function" && oldVal !== newVal) {
+        handleEventListeners({ element: dom, key, value: newVal, type: "add" });
+      }
+
+      continue;
     }
+
+    // 이전과 동일하므로 아무 작업도 안 함
+    if (oldVal === newVal && newVal != null) {
+      continue;
+    }
+
+    if (newVal == null) {
+      dom.removeAttribute(key);
+      continue;
+    }
+
+    if (typeof newVal === "boolean") {
+      if (newVal) dom.setAttribute(key, "true");
+      else dom.removeAttribute(key);
+      continue;
+    }
+
+    // input의 경우 DOM 프로퍼티에 직접 할당
+    if (key === "value") {
+      dom.value = newVal;
+      continue;
+    }
+
+    dom.setAttribute(key, String(newVal));
   }
 }

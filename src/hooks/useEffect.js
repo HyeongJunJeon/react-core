@@ -83,7 +83,6 @@ export function unmountApp() {
     }
   }
 
-  // 3) root 요소를 비우거나 제거
   const root = document.getElementById("root");
   if (root) root.innerHTML = "";
 }
