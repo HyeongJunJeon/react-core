@@ -1,4 +1,5 @@
-import { handleEventListeners, renderVirtualDom } from "./helper";
+import { handleEventListeners } from "../event/handleEventListeners";
+import { renderVirtualDom } from "./helper";
 
 export function diff(parent, oldNode, newNode, index = 0) {
   if (!oldNode && !newNode) return;
@@ -58,12 +59,13 @@ function isChangedNode(oldNode, newNode) {
  * oldProps와 newProps를 비교해 변경된 부분만 업데이트
  */
 function updateProps(dom, oldProps = {}, newProps = {}) {
-  // 기존 이벤트 리스너 속성 제거
-
+  // 기존 이벤트 리스너 속성 제 거
   for (const key in oldProps) {
     if (!(key in newProps)) {
       dom.removeAttribute(key);
     }
+
+    // TODO: 함수는 diff가 실행될 때마다 삭제 및 생성 되므로 비교하는 로직이 필요함...
 
     if (key.startsWith("on") && typeof oldProps[key] === "function") {
       handleEventListeners({

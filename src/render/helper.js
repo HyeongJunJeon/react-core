@@ -1,4 +1,4 @@
-import { eventMap } from "../util/const";
+import { handleEventListeners } from "../event/handleEventListeners";
 
 /**
  * Virtual DOM을 실제 DOM에 렌더링
@@ -63,42 +63,4 @@ function handleChildren(element, children) {
       }
     }
   });
-}
-
-function createSyntheticEvent(nativeEvent) {
-  return {
-    nativeEvent,
-    target: nativeEvent.target,
-    preventDefault: () => nativeEvent.preventDefault(),
-    stopPropagation: () => nativeEvent.stopPropagation(),
-  };
-}
-
-/**
- * 이벤트 핸들러 등록 또는 제거
- */
-export function handleEventListeners({ element, key, value, type = "add" }) {
-  const eventName = eventMap[key] ?? key.toLowerCase().substring(2);
-
-  if (type === "add") {
-    const syntheticCallback = (nativeEvent) => {
-      const syntheticEvent = createSyntheticEvent(nativeEvent);
-      // syntheticEvent 전달
-      value(syntheticEvent);
-    };
-
-    element.addEventListener(eventName, syntheticCallback);
-
-    // 생성시에 등록한 syntheticCallback을 저장해야한다.
-    // 함수도 객체이므로 eventListener가 등록될때마다 참조가 변경되므로
-    // 같은 참조의 함수를 추후 제거할 수 있도록 저장해야한다.
-    element._listeners = element._listeners || {};
-    element._listeners[key] = syntheticCallback;
-  } else {
-    const callback = element._listeners?.[key];
-    if (callback) {
-      element.removeEventListener(eventName, callback);
-      delete element._listeners[key];
-    }
-  }
 }
