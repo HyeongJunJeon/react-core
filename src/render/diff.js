@@ -1,4 +1,5 @@
 import { handleEventListeners } from "../event/handleEventListeners";
+import { validAttributes } from "../util/const";
 import { renderVirtualDom } from "./helper";
 
 export function diff(parent, oldNode, newNode, index = 0) {
@@ -82,6 +83,31 @@ function updateProps(dom, oldProps = {}, newProps = {}) {
       continue;
     }
 
+    // style 처리
+    if (key === "style") {
+      if (newVal && typeof newVal === "object") {
+        handleStyle(dom, oldVal, newVal);
+      } else {
+        // 새로운 style이 객체가 아니면 전체 제거
+        if (typeof oldVal === "object") {
+          for (const styleKey in oldVal) {
+            dom.style[styleKey] = "";
+          }
+        }
+      }
+      continue;
+    }
+
+    // className -> class
+    if (key === "className") {
+      if (newVal == null) {
+        dom.removeAttribute("class");
+      } else {
+        dom.setAttribute("class", String(newVal));
+      }
+      continue;
+    }
+
     // 이전과 동일하므로 아무 작업도 안 함
     if (oldVal === newVal && newVal != null) {
       continue;
@@ -104,6 +130,29 @@ function updateProps(dom, oldProps = {}, newProps = {}) {
       continue;
     }
 
-    dom.setAttribute(key, String(newVal));
+    // 허용된 속성인 경우
+    if (validAttributes.includes(key)) {
+      if (newVal == null) {
+        dom.removeAttribute(key);
+      } else if (oldVal !== newVal) {
+        dom.setAttribute(key, String(newVal));
+      }
+      continue;
+    }
+  }
+}
+
+// 스타일을 비교하여 변경된 부분만 업데이트
+function handleStyle(dom, oldStyle = {}, newStyle = {}) {
+  for (const key in oldStyle) {
+    if (!(key in newStyle)) {
+      dom.style[key] = "";
+    }
+  }
+
+  for (const [key, value] of Object.entries(newStyle)) {
+    if (oldStyle[key] !== value) {
+      dom.style[key] = value;
+    }
   }
 }

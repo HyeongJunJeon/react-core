@@ -2,6 +2,8 @@ import { unmountApp, useEffect } from "./hooks/useEffect";
 import { useState } from "./hooks/useState";
 import { TODOS } from "./util/const";
 import { getItem, setItem } from "./util/storage";
+import styles from "./App.module.css";
+import ImageBox from "./components/ImageBox";
 
 const loadTodosFromStorage = () => {
   const savedTodos = getItem(TODOS);
@@ -106,7 +108,7 @@ function App() {
 
   return (
     <div>
-      <h1>TODO 리스트</h1>
+      <h1 className={styles.title}>TODO 리스트</h1>
       <h2>오늘의 남은 시간: {timeLeft}</h2>
 
       <input
@@ -140,7 +142,7 @@ function App() {
         {isFetching ? (
           <p>Loading...</p>
         ) : (
-          <img src={dogImageUrl} alt="Dog" width={150} height={150} />
+          <ImageBox src={dogImageUrl} alt="Dog" width={150} height={150} />
         )}
       </div>
     </div>
