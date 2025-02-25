@@ -1,3 +1,5 @@
+import { handleEventListeners } from "../event/handleEventListeners";
+
 /**
  * Virtual DOM을 실제 DOM에 렌더링
  */
@@ -26,16 +28,7 @@ function handleProps(element, props) {
 
   Object.entries(props).forEach(([key, value]) => {
     if (key.startsWith("on") && typeof value === "function") {
-      //TODO: onChange는 input 요쇼로 등록해야하는데
-      // input으로 등록시 input에 한글자씩 글을 입력할 때마다 포커스가 빠짐
-      // 입력할때마다 state가 리렌더링 되면서 발생하는 것으로 추정되어 좀 더 고민이 필요.
-      const eventMap = {
-        // onChange: "input",
-        onClick: "click",
-      };
-
-      const eventName = eventMap[key] ?? key.toLowerCase().substring(2);
-      return element.addEventListener(eventName, value);
+      handleEventListeners({ element, key, value, type: "add" });
     }
 
     if (key !== "children" && key !== "key") {
