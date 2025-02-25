@@ -1,3 +1,7 @@
+import { createSyntheticEvent } from "./createSyntheticEvent";
+
+const ALL_EVENTS = ["click", "input", "change"];
+
 function globalEventHandler(e) {
   const { type: eventType, target } = e;
   let currentTarget = target;
