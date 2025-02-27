@@ -1,0 +1,13 @@
+.surveyResult h1 {
+  margin: 20px 0;
+  font-size: 3rem;
+}
+
+.surveyResult button {
+  margin-top: 10px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: #6980ad;
+  cursor: pointer;
+}

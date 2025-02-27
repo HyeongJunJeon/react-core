@@ -1,9 +1,10 @@
-import styles from "./App.module.css";
 import Survey from "./components/survey/Survey";
 import Header from "./components/header";
+import "./App.module.css";
+
 function App() {
   return (
-    <main className={styles.container}>
+    <main>
       <Header />
       <Survey />
     </main>

@@ -1,9 +1,7 @@
 import { InputLabel, BoxLayout } from "@/components";
 import styles from "./index.module.css";
-
-export default function RadioGroup({
+export default function CheckboxGroup({
   label,
-  name,
   options,
   checked,
   onChange,
@@ -13,19 +11,17 @@ export default function RadioGroup({
     <BoxLayout>
       <div>
         <InputLabel label={label} required={required} />
-        <div className={styles.radioGroup}>
+        <div className={styles.checkboxGroup}>
           {options.map((option) => (
-            <div key={option} className={styles.radio}>
+            <label key={option} className={styles.checkbox}>
               <input
-                className={styles.input}
-                type="radio"
-                name={name}
+                type="checkbox"
                 value={option}
-                checked={checked === option}
+                checked={checked.includes(option)}
                 onChange={(e) => onChange(e.target.value)}
               />
               {option}
-            </div>
+            </label>
           ))}
         </div>
       </div>

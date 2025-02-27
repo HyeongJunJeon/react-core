@@ -1,10 +1,11 @@
 .container {
-  max-width: 1200px;
+  max-width: 800px;
+  min-width: 300px;
   margin: 20px auto 0;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-color);
   overflow: hidden;
 
   > * {
@@ -13,6 +14,6 @@
 
   > header {
     padding-top: 0px;
-    border-top: 20px solid var(--purple-color);
+    border-top: 16px solid var(--purple-color);
   }
 }

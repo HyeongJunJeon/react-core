@@ -1,8 +1,8 @@
-.radioGroup {
+.checkboxGroup {
   margin-top: var(--gap-input-title-content);
 }
 
-.radio {
+.checkbox {
   display: flex;
   align-items: center;
   gap: 4px;
