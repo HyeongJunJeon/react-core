@@ -19,4 +19,5 @@ export const validAttributes = [
   "placeholder",
   "title",
   "selected",
+  "label",
 ];
