@@ -1,52 +1,27 @@
-import {
-  CheckboxGroup,
-  InputField,
-  RadioGroup,
-  InputSelect,
-  SurveyResult,
-} from "@/components";
+import { CheckboxGroup, RadioGroup } from "@/components";
 
-export default function FirstSection() {
+export default function FirstSection({ form, onChange }) {
   return (
-    <div>
+    <section>
       <RadioGroup
-        label="radio input"
+        label="몇년차 프론트 개발자 이신가요?"
         required
         name="radioOption"
-        options={["option1", "option2", "option3"]}
-        checked={"option1"}
-        onChange={(e) => {
-          console.log(e);
+        options={["1년미만", "1~3년", "3~5년", "5~10년", "10년이상"]}
+        checked={form.radioOption || "1년미만"}
+        onChange={(newValue) => {
+          onChange("radioOption", newValue);
         }}
       />
       <CheckboxGroup
-        label="checkbox input"
+        label="다음 중 가능한 프레임워크는 무엇인가요? (여러개 선택 가능)"
         required
-        options={["option1", "option2", "option3"]}
-        checked={["option1"]}
-        onChange={(e) => {
-          console.log(e);
+        options={["React", "Vue", "Angular", "Next", "jQuery"]}
+        checked={form.checkboxOption || []}
+        onChange={(newValue) => {
+          onChange("checkboxOption", newValue, true);
         }}
       />
-      <InputField
-        label="text input"
-        required
-        value=""
-        placeholder="내답변"
-        onChange={(e) => {
-          console.log(e);
-        }}
-      />
-      <InputSelect
-        label="select input"
-        required
-        options={["option1", "option2", "option3"]}
-        selected={"option2"}
-        onChange={(e) => {
-          console.log(e);
-        }}
-      />
-      <SurveyResult />
-    </div>
+    </section>
   );
 }

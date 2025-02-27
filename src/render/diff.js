@@ -4,6 +4,14 @@ import { renderVirtualDom } from "./helper";
 
 export function diff(parent, oldNode, newNode, index = 0) {
   if (!oldNode && !newNode) return;
+
+  // newNode에서 없어졌다면 삭제된 요소
+  if (oldNode && !newNode) {
+    const oldDom = parent.childNodes[index];
+    if (oldDom) parent.removeChild(oldDom);
+    return;
+  }
+
   const oldDom = parent.childNodes[index];
 
   // 맨 처음 비교 때는 oldNode가 없고 newNode만 있으므로 새 요소 추가
@@ -20,7 +28,10 @@ export function diff(parent, oldNode, newNode, index = 0) {
 
   // 노드가 변경되었는지 판단 후 새로운 노드로 교체
   if (isChangedNode(oldNode, newNode)) {
-    parent.replaceChild(renderVirtualDom(newNode), oldDom);
+    const newDom = renderVirtualDom(newNode);
+    if (oldDom && newDom instanceof Node) {
+      parent.replaceChild(newDom, oldDom);
+    }
     return;
   }
 

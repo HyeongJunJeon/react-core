@@ -7,4 +7,6 @@ export { default as InputLabel } from "./inputLabel";
 export { default as CheckboxGroup } from "./checkboxGroup";
 export { default as InputField } from "./inputField";
 export { default as InputSelect } from "./inputSelect";
-export { default as SurveyResult } from "./surveyResult";
+export { default as Button } from "./button";
+export { default as SecondSection } from "./secondSection";
+export { default as ResultSection } from "./resultSection";

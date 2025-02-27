@@ -1,0 +1,36 @@
+.button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  --button-padding: 10px 20px;
+  --button-border-radius: 6px;
+  --button-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  &:hover {
+    opacity: 0.8;
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.primary {
+  background-color: var(--purple-color);
+  color: #fff;
+  padding: var(--button-padding);
+  border-radius: var(--button-border-radius);
+  box-shadow: var(--button-box-shadow);
+}
+
+.secondary {
+  background-color: #fff;
+  color: var(--purple-color);
+  padding: var(--button-padding);
+  border-radius: var(--button-border-radius);
+  box-shadow: var(--button-box-shadow);
+}
+
+.tertiary {
+  background-color: transparent;
+  color: var(--purple-color);
+}

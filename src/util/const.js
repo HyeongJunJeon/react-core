@@ -1,4 +1,4 @@
-export const TODOS = "todos";
+export const FORM = "form";
 
 export const eventMap = {
   onChange: "input",

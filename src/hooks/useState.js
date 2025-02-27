@@ -42,7 +42,11 @@ function createStateStore() {
     }
 
     const setState = (newValue) => {
-      states[index] = newValue;
+      if (typeof newValue === "function") {
+        states[index] = newValue(states[index]);
+      } else {
+        states[index] = newValue;
+      }
       rerender();
     };
 

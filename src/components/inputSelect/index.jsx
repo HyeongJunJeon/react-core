@@ -16,7 +16,7 @@ export default function InputSelect({
     <BoxLayout>
       <div className={styles.inputSelect}>
         <InputLabel label={label} required={required} />
-        <select onChange={onChange}>
+        <select onChange={(e) => onChange(e.target.value)}>
           {options.map((option) => (
             <option key={option} value={option} selected={selected === option}>
               {option}
