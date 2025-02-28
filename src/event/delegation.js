@@ -1,4 +1,4 @@
-import { createSyntheticEvent } from "./createSyntheticEvent";
+import { createSyntheticEvent } from "@/event/createSyntheticEvent";
 
 const ALL_EVENTS = ["click", "input", "change"];
 

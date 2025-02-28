@@ -1,6 +1,6 @@
-import { handleEventListeners } from "../event/handleEventListeners";
-import { validAttributes } from "../util/const";
-import { renderVirtualDom } from "./helper";
+import { handleEventListeners } from "@/event/handleEventListeners";
+import { VALID_ATTRIBUTES } from "@/util/const";
+import { renderVirtualDom } from "@/render/helper";
 
 export function diff(parent, oldNode, newNode, index = 0) {
   if (!oldNode && !newNode) return;
@@ -142,7 +142,7 @@ function updateProps(dom, oldProps = {}, newProps = {}) {
     }
 
     // 허용된 속성인 경우
-    if (validAttributes.includes(key)) {
+    if (VALID_ATTRIBUTES.includes(key)) {
       if (newVal == null) {
         dom.removeAttribute(key);
       } else if (oldVal !== newVal) {

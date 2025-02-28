@@ -1,6 +1,6 @@
-import { runEffects } from "../hooks/useEffect";
-import { diff } from "./diff";
-import { renderVirtualDom } from "./helper";
+import { runEffects } from "@/hooks/useEffect";
+import { diff } from "@/render/diff";
+import { renderVirtualDom } from "@/render/helper";
 
 let oldVDOM = null;
 

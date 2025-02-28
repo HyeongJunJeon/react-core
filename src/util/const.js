@@ -1,10 +1,10 @@
 export const FORM = "form";
 
-export const eventMap = {
+export const EVENT_MAP = {
   onChange: "input",
 };
 
-export const validAttributes = [
+export const VALID_ATTRIBUTES = [
   "id",
   "alt",
   "href",

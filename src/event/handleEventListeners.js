@@ -1,7 +1,7 @@
-import { eventMap } from "../util/const";
+import { EVENT_MAP } from "@/util/const";
 
 export function handleEventListeners({ element, key, value, type = "add" }) {
-  const eventName = eventMap[key] ?? key.toLowerCase().substring(2);
+  const eventName = EVENT_MAP[key] ?? key.toLowerCase().substring(2);
 
   if (type === "add") {
     // 전역 리스너가 syntheticEvent를 만들 수 있으므로

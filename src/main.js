@@ -1,6 +1,7 @@
-import App from "./App";
-import { initEventDelegation } from "./event/delegation";
-import { render } from "./render";
+import App from "@/App";
+import { initEventDelegation } from "@/event/delegation";
+import { render } from "@/render";
+import "@/assets/styles/global.css";
 
 initEventDelegation();
 

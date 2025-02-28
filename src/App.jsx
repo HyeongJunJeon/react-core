@@ -7,7 +7,6 @@ import {
 } from "@/components";
 import { useEffect } from "@/hooks/useEffect";
 import { useState } from "@/hooks/useState";
-import "./App.module.css";
 import { setItem, getItem, removeItem } from "@/util/storage";
 import styles from "./App.module.css";
 import { FORM } from "@/util/const";

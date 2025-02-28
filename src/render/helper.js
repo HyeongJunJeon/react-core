@@ -1,5 +1,5 @@
-import { handleEventListeners } from "../event/handleEventListeners";
-import { validAttributes } from "../util/const";
+import { handleEventListeners } from "@/event/handleEventListeners";
+import { VALID_ATTRIBUTES } from "@/util/const";
 
 /**
  * Virtual DOM을 실제 DOM에 렌더링
@@ -51,7 +51,7 @@ function handleProps(element, props) {
     }
 
     // 허용된 속성인 경우
-    else if (validAttributes.includes(key)) {
+    else if (VALID_ATTRIBUTES.includes(key)) {
       switch (typeof value) {
         case "boolean":
           value

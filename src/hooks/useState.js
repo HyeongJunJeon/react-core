@@ -1,6 +1,6 @@
-import App from "../App";
-import { render } from "../render";
-import { resetEffectIndex } from "./useEffect";
+import App from "@/App";
+import { render } from "@/render";
+import { resetEffectIndex } from "@/hooks/useEffect";
 
 function createStateStore() {
   /**
