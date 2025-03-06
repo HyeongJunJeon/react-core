@@ -46,7 +46,6 @@ function App() {
   };
 
   const handleSubmit = () => {
-    //TODO: fetch 구현
     handleClearForm();
   };
 
@@ -71,13 +70,6 @@ function App() {
   }, [step]);
 
   return (
-    /**
-     * TODO: isSurveyFinished일 때 &&로 제어가 안되고 삼항연산자로 <div></div>를 명시해줘야 하는 문제
-     * TODO: button도 마찬가지로 null을 명시해줘야 하는문제
-     * TODO: button의 개별적인 렌더링도 조건식으로 처리해야하는데 step이 바뀌어도 ui가 안바뀌는 문제가 있어 우선 disabled처리
-     * TODO: 양식 지우기 버튼도 step이 1일 때 클릭 시 ui가 초기화가 안되는 문제가 있어 우선 disabled처리
-     * diff에서 비교하면서 dom을 정상적으로 삭제해야하는데 디버깅 필요
-     */
     <main className={styles.mainContainer}>
       {!isSurveyFinished ? <Header /> : <div></div>}
       {renderSectionByStep(step)}
