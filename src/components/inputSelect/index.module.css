@@ -1,0 +1,13 @@
+.inputSelect {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-input-title-content);
+}
+
+.inputSelect select {
+  max-width: 40%;
+  padding: 8px;
+
+  outline: none;
+  border: 1px solid var(--border-color);
+}

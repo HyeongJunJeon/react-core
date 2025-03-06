@@ -1,0 +1,17 @@
+.mainContainer {
+  max-width: 800px;
+  min-width: 300px;
+  margin: 0 auto;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 10px;
+}

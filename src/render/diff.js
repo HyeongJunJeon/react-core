@@ -1,8 +1,17 @@
-import { handleEventListeners } from "../event/handleEventListeners";
-import { renderVirtualDom } from "./helper";
+import { handleEventListeners } from "@/event/handleEventListeners";
+import { VALID_ATTRIBUTES } from "@/util/const";
+import { renderVirtualDom } from "@/render/helper";
 
 export function diff(parent, oldNode, newNode, index = 0) {
   if (!oldNode && !newNode) return;
+
+  // newNode에서 없어졌다면 삭제된 요소
+  if (oldNode && !newNode) {
+    const oldDom = parent.childNodes[index];
+    if (oldDom) parent.removeChild(oldDom);
+    return;
+  }
+
   const oldDom = parent.childNodes[index];
 
   // 맨 처음 비교 때는 oldNode가 없고 newNode만 있으므로 새 요소 추가
@@ -19,7 +28,10 @@ export function diff(parent, oldNode, newNode, index = 0) {
 
   // 노드가 변경되었는지 판단 후 새로운 노드로 교체
   if (isChangedNode(oldNode, newNode)) {
-    parent.replaceChild(renderVirtualDom(newNode), oldDom);
+    const newDom = renderVirtualDom(newNode);
+    if (oldDom && newDom instanceof Node) {
+      parent.replaceChild(newDom, oldDom);
+    }
     return;
   }
 
@@ -82,6 +94,31 @@ function updateProps(dom, oldProps = {}, newProps = {}) {
       continue;
     }
 
+    // style 처리
+    if (key === "style") {
+      if (newVal && typeof newVal === "object") {
+        handleStyle(dom, oldVal, newVal);
+      } else {
+        // 새로운 style이 객체가 아니면 전체 제거
+        if (typeof oldVal === "object") {
+          for (const styleKey in oldVal) {
+            dom.style[styleKey] = "";
+          }
+        }
+      }
+      continue;
+    }
+
+    // className -> class
+    if (key === "className") {
+      if (newVal == null) {
+        dom.removeAttribute("class");
+      } else {
+        dom.setAttribute("class", String(newVal));
+      }
+      continue;
+    }
+
     // 이전과 동일하므로 아무 작업도 안 함
     if (oldVal === newVal && newVal != null) {
       continue;
@@ -104,6 +141,29 @@ function updateProps(dom, oldProps = {}, newProps = {}) {
       continue;
     }
 
-    dom.setAttribute(key, String(newVal));
+    // 허용된 속성인 경우
+    if (VALID_ATTRIBUTES.includes(key)) {
+      if (newVal == null) {
+        dom.removeAttribute(key);
+      } else if (oldVal !== newVal) {
+        dom.setAttribute(key, String(newVal));
+      }
+      continue;
+    }
+  }
+}
+
+// 스타일을 비교하여 변경된 부분만 업데이트
+function handleStyle(dom, oldStyle = {}, newStyle = {}) {
+  for (const key in oldStyle) {
+    if (!(key in newStyle)) {
+      dom.style[key] = "";
+    }
+  }
+
+  for (const [key, value] of Object.entries(newStyle)) {
+    if (oldStyle[key] !== value) {
+      dom.style[key] = value;
+    }
   }
 }

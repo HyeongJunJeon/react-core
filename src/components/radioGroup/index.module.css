@@ -1,0 +1,14 @@
+.radioGroup {
+  margin-top: var(--gap-input-title-content);
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 0.75rem;
+
+  > input:checked {
+    accent-color: var(--purple-color);
+  }
+}

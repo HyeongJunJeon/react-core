@@ -1,4 +1,5 @@
-import { handleEventListeners } from "../event/handleEventListeners";
+import { handleEventListeners } from "@/event/handleEventListeners";
+import { VALID_ATTRIBUTES } from "@/util/const";
 
 /**
  * Virtual DOM을 실제 DOM에 렌더링
@@ -11,6 +12,12 @@ export function renderVirtualDom(vnode) {
   // string이거나, number type이면 텍스트 노드 생성
   if (typeof vnode === "string" || typeof vnode === "number") {
     return document.createTextNode(String(vnode));
+  }
+
+  // 컴포넌트를 렌더링하는 경우
+  if (typeof vnode.type === "function") {
+    const childVnode = vnode.type(vnode.props || {});
+    return renderVirtualDom(childVnode);
   }
 
   const element = document.createElement(vnode.type);
@@ -31,15 +38,26 @@ function handleProps(element, props) {
       handleEventListeners({ element, key, value, type: "add" });
     }
 
-    if (key !== "children" && key !== "key") {
+    // className -> class 속성
+    else if (key === "className") {
+      element.setAttribute("class", value);
+    }
+
+    // 각 CSS 속성을 element.style에 할당
+    else if (key === "style" && typeof value === "object") {
+      Object.entries(value).forEach(([styleKey, styleValue]) => {
+        element.style[styleKey] = styleValue;
+      });
+    }
+
+    // 허용된 속성인 경우
+    else if (VALID_ATTRIBUTES.includes(key)) {
       switch (typeof value) {
-        // checkbox가 계속 true 값을 가지게 되서 속성 자체를 제거
         case "boolean":
           value
             ? element.setAttribute(key, "true")
             : element.removeAttribute(key);
           break;
-
         default:
           element.setAttribute(key, String(value));
       }

@@ -1,0 +1,26 @@
+@import "./normalize.css";
+
+html {
+  font-size: 16px;
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+body {
+  background-color: #efecf9;
+  padding: 20px;
+  --text-color: #000;
+  --purple-color: #6b46c1;
+  --required-color: #d12e2c;
+  --gap-input-title-content: 1.5rem;
+  --border-color: #e0e0e0;
+  color: var(--text-color);
+
+  @media (max-width: 480px) {
+    padding: 30px;
+  }
+}
